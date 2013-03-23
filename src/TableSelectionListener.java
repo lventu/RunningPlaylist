@@ -14,20 +14,21 @@ import song.SongItem;
  */
 public class TableSelectionListener implements ListSelectionListener {
 
-	private JTable table;
-	private List<SongItem> selectedSong;
+	private static JTable table;
+	public static List<SongItem> selectedSong;
 	
 	public List<SongItem> getSelectedSong() {
 		return selectedSong;
 	}
 
-	public TableSelectionListener(JTable table) {
+	public TableSelectionListener(JTable asTable) {
 		super();
-		this.table = table;
+		table = asTable;
 		selectedSong = new ArrayList<SongItem>();
 	}
 
-	private void resetRowSelection(){
+	public static void resetRowSelection(){
+		table.getSelectionModel().clearSelection();
 		selectedSong.clear();
 	}
 	
@@ -37,7 +38,7 @@ public class TableSelectionListener implements ListSelectionListener {
 			int[] rowsNum = table.getSelectedRows();
 			SongTableModel tableModel = (SongTableModel) table.getModel();
 			// Each changing the list is re-builded
-			resetRowSelection();
+			selectedSong.clear();
 			for (int idx : rowsNum){
 				selectedSong.add(tableModel.getRow(idx));
 			}
