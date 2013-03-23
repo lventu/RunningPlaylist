@@ -9,7 +9,7 @@ public enum SortBy {
 	HOT("workout-songs"),
 	MOST_ADDED("popular-workout-songs"),
 	BY_BPM("workout-songs-by-bpm"),
-	NEWEST("new-workout-song"),
+	NEWEST("new-workout-songs"),
 	BY_NAME("workout-songs-by-name");
 	
 	private final String text;
