@@ -6,7 +6,11 @@ import javax.swing.JPanel;
 
 import types.SortBy;
 
-
+/** An extension of JPanel that contains a 'Song Filter'
+ * @author Luca Venturini
+ * @version 1.00
+ * 
+ */
 public class FilterPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -17,6 +21,8 @@ public class FilterPanel extends JPanel {
 		combo.setModel(new DefaultComboBoxModel<>(SortBy.values()));
 		combo.setSize(100, 30);
 		combo.addActionListener(new SortChangeListener(songTable));
+		
+		combo.setSelectedIndex(0); //initial
 		
 		this.add(combo);
 	}
