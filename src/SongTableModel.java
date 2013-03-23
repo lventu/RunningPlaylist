@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -60,4 +61,12 @@ public class SongTableModel extends AbstractTableModel {
 		return SongItem.toObjectArray(rows.get(rowIndex))[columnIndex];
 	}
 	
+	public Object getValueAt(int rowIndex, String columnName) {
+		int colPos = Arrays.binarySearch(column, columnName);
+		return SongItem.toObjectArray(rows.get(rowIndex))[colPos];
+	}
+	
+	public SongItem getRow(int index){
+		return rows.get(index);
+	}
 }
