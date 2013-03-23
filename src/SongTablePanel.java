@@ -12,6 +12,11 @@ import song.SongItem;
 import types.DefaultSettings;
 import types.SortBy;
 
+/** An extension of JPanel that contains a customized JTable
+ * @author Luca Venturini
+ * @version 1.00
+ * 
+ */
 public class SongTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -21,9 +26,8 @@ public class SongTablePanel extends JPanel {
 	public SongTablePanel( ) {
         super(new GridLayout(1,0));
         if (songTableModel==null) {
-        	songTableModel = new SongTableModel(retrieveData(DefaultSettings.DEFAULT_SORTING, DefaultSettings.DEFAULT_PACE), SongItem.columnData);
+        	songTableModel = new SongTableModel(SongItem.columnData);
         }
-        
         table = new JTable(songTableModel);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setPreferredScrollableViewportSize(new Dimension(500, 500));
@@ -56,6 +60,10 @@ public class SongTablePanel extends JPanel {
 		return coll;
 	}
 	
+	/** Function to update the table
+	 * @param sort PageSorting Method
+	 * @param pace Target Pace
+	 */
 	public void updateTableData(SortBy sort, String pace) {
 		if (songTableModel!=null) {
 			songTableModel.clearRows();
