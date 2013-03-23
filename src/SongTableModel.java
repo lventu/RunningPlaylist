@@ -69,4 +69,11 @@ public class SongTableModel extends AbstractTableModel {
 	public SongItem getRow(int index){
 		return rows.get(index);
 	}
+	
+	@Override
+	public void fireTableDataChanged() {
+		super.fireTableDataChanged();
+		
+	}
+	
 }
