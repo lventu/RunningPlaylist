@@ -21,7 +21,8 @@ public class SongTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private SongTableModel songTableModel = null;
-	JTable table = null;
+	private TableSelectionListener selectionListener;
+	private JTable table = null;
 	 
 	public SongTablePanel( ) {
         super(new GridLayout(1,0));
@@ -32,15 +33,20 @@ public class SongTablePanel extends JPanel {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setPreferredScrollableViewportSize(new Dimension(500, 500));
         table.setFillsViewportHeight(true);
+        // Adding selections listener
+        selectionListener = new TableSelectionListener(table);
+        //table.setRowSelectionAllowed(true);
+        table.getSelectionModel().addListSelectionListener(selectionListener); // row selection
+//        table.getColumnModel().getSelectionModel().addListSelectionListener(selectionListener); //column selection
         //Adjust columns width
         TableColumnAdjuster adjuster = new TableColumnAdjuster(table,3);
         adjuster.setColumnDataIncluded(true);
         //adjuster.setColumnHeaderIncluded(true);
         adjuster.setDynamicAdjustment(true);
         adjuster.adjustColumns();
+        
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
-
         //Add the scroll pane to this panel.
         add(scrollPane);
 	}
@@ -67,6 +73,7 @@ public class SongTablePanel extends JPanel {
 	public void updateTableData(SortBy sort, String pace) {
 		if (songTableModel!=null) {
 			songTableModel.clearRows();
+			table.getSelectionModel().clearSelection();
 			List<SongItem> rows = retrieveData(sort,pace);
 			songTableModel.setRows(rows);
 			table.repaint();
