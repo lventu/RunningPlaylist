@@ -8,7 +8,7 @@ import types.SortBy;
 
 public class SortChangeListener implements ActionListener {
 	
-	private static SortBy sbOldValue = DefaultSettings.DEFAULT_SORTING; 
+	private static SortBy sbOldValue = null; // DefaultSettings.DEFAULT_SORTING; 
 	private SongTablePanel songTable = null;
 	
 	public SortChangeListener(SongTablePanel songTable) {
