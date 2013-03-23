@@ -13,7 +13,7 @@ public class SongItem {
 	private String songTargetPace;
 	
 	public static final String[] columnData = {"ARTISTA","TITOLO","GENERE","BPM","TARGET PACE"};
-	
+	public static final int columnCount = columnData.length;
 	/**
 	 * Empty Constructor
 	 */
