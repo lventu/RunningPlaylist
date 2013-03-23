@@ -1,8 +1,9 @@
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,13 +26,15 @@ public class SongTablePanel extends JPanel {
 	private JTable table = null;
 	 
 	public SongTablePanel( ) {
-        super(new GridLayout(1,0));
+        //super(new FlowLayout());
+		this.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.setPreferredSize(new Dimension(540,400));
         if (songTableModel==null) {
         	songTableModel = new SongTableModel(SongItem.columnData);
         }
         table = new JTable(songTableModel);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        table.setPreferredScrollableViewportSize(new Dimension(500, 300));
         table.setFillsViewportHeight(true);
         // Adding selections listener
         selectionListener = new TableSelectionListener(table);
@@ -44,11 +47,29 @@ public class SongTablePanel extends JPanel {
         //adjuster.setColumnHeaderIncluded(true);
         adjuster.setDynamicAdjustment(true);
         adjuster.adjustColumns();
-        
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
+        
+        ClickListener clickListener = new ClickListener();
+        // Download Button
+        JButton btnOk = new JButton("Scarica");
+        btnOk.setName("OK");
+        btnOk.setOpaque(true);
+        btnOk.setVisible(true);
+        btnOk.addActionListener(clickListener);
+        
+        // Clear Selection Button
+        JButton btnUndo = new JButton("Annulla Selezione");
+        btnUndo.setName("ANNULLA");
+        btnUndo.setOpaque(true);
+        btnUndo.setVisible(true);
+        btnUndo.addActionListener(clickListener);
+        
         //Add the scroll pane to this panel.
         add(scrollPane);
+        // Adds the buttons to this panel.
+        add(btnUndo);
+        add(btnOk);
 	}
 	
 	private List<SongItem> retrieveData(SortBy sort, String pace) {
