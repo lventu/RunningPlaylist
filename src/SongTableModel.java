@@ -6,7 +6,6 @@ import javax.swing.table.AbstractTableModel;
 
 import song.SongItem;
 
-
 /** Table Model to visualize song items
  * @author Luca Venturini
  * @version 1.00
@@ -24,7 +23,7 @@ public class SongTableModel extends AbstractTableModel {
 		this.column = column;
 	}
 	
-	public void clearRows() {
+	private void clearRows() {
 		this.rows.clear();
 	}
 	
@@ -61,6 +60,11 @@ public class SongTableModel extends AbstractTableModel {
 		return SongItem.toObjectArray(rows.get(rowIndex))[columnIndex];
 	}
 	
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		SongItem.toObjectArray(rows.get(rowIndex))[columnIndex] = aValue;
+	}
+	
 	public Object getValueAt(int rowIndex, String columnName) {
 		int colPos = Arrays.binarySearch(column, columnName);
 		return SongItem.toObjectArray(rows.get(rowIndex))[colPos];
@@ -70,10 +74,15 @@ public class SongTableModel extends AbstractTableModel {
 		return rows.get(index);
 	}
 	
-	@Override
-	public void fireTableDataChanged() {
-		super.fireTableDataChanged();
-		
+	public void setDataObj(List<SongItem> list) {
+		clearRows();
+		setRows(list);
+		fireTableDataChanged();
 	}
 	
+	@Override
+	public void fireTableDataChanged() {
+		// update the data
+	}
+
 }
