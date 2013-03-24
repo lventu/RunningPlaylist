@@ -1,4 +1,4 @@
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -16,11 +16,12 @@ public class FilterPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	public FilterPanel(SongTablePanel songTable) {
-		super(new GridLayout(1,0));
+		this.setLayout(new FlowLayout(FlowLayout.LEFT,10,5));
 		JComboBox<SortBy> combo = new JComboBox<>();
 		combo.setModel(new DefaultComboBoxModel<>(SortBy.values()));
 		combo.setSize(100, 30);
-		combo.addActionListener(new SortChangeListener(songTable));
+		SortChangeListener sortChangeListener = new SortChangeListener(songTable);
+		combo.addActionListener(sortChangeListener);
 		
 		combo.setSelectedIndex(0); //initial
 		
