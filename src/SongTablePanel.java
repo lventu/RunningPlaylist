@@ -25,6 +25,10 @@ public class SongTablePanel extends JPanel {
 	private TableSelectionListener selectionListener;
 	private JTable table = null;
 	 
+	public JTable getTable() {
+		return table;
+	}
+
 	public SongTablePanel( ) {
         //super(new FlowLayout());
 		this.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -72,6 +76,11 @@ public class SongTablePanel extends JPanel {
         add(btnOk);
 	}
 	
+	/** Data Retrieve Function
+	 * @param sort
+	 * @param pace
+	 * @return
+	 */
 	private List<SongItem> retrieveData(SortBy sort, String pace) {
 		int currentPage = 1;
 		HtmlAccess obj = new HtmlAccess(sort, pace, DefaultSettings.DEFAULT_UNIT);
@@ -90,14 +99,13 @@ public class SongTablePanel extends JPanel {
 	/** Function to update the table
 	 * @param sort PageSorting Method
 	 * @param pace Target Pace
-	 */
+	*/ 
 	public void updateTableData(SortBy sort, String pace) {
 		if (songTableModel!=null) {
-			songTableModel.clearRows();
 			table.getSelectionModel().clearSelection();
 			List<SongItem> rows = retrieveData(sort,pace);
-			songTableModel.setRows(rows);
-			table.repaint();
+			songTableModel.setDataObj(rows);
+			table.addNotify(); // table refresh
 		}
 	}
 }
