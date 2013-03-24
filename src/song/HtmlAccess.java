@@ -45,6 +45,11 @@ public class HtmlAccess extends NObject{
 	 * @param pageNumber 
 	 * 
 	 */
+	
+	public HtmlAccess(String sortString) {
+		this(SortBy.valueOf(sortString),null,null);
+	}
+	
 	public HtmlAccess(SortBy sortBy) {
 		this(sortBy,null,null);
 	}
