@@ -7,7 +7,24 @@ import javax.swing.JButton;
 import song.SongItem;
 
 
+/** Class that implement the click listener for the button
+ * @author luca
+ */
 public class ClickListener implements ActionListener {
+	
+	YoutubeConnector connector;
+	
+	/**
+	 * Constructor
+	 */
+	public ClickListener() {
+		try {
+			connector = new YoutubeConnector();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent asEvent) {
@@ -20,13 +37,12 @@ public class ClickListener implements ActionListener {
 				String asVideoId = null;
 				for (SongItem song : list) {
 					try {
-						YoutubeConnector a = new YoutubeConnector();
-						asVideoId = a.getYoutubeVideoID(song.getSongArtist(), song.getSongTitle());
+						asVideoId = connector.getYoutubeVideoID(song.getSongArtist(), song.getSongTitle());
+						System.out.println(song.getSongTitle() + "\t\t"+ asVideoId);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
 				}
 			}
 			break;
