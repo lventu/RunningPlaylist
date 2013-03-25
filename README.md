@@ -6,7 +6,8 @@ Grab song From jog.fm
 At this time the project is far from final object.
 Slowly I hope it will grow.
 
-THIS IS A INITIAL VERSION
+<h2><b>THIS IS A INITIAL VERSION</b></h2>
+<--- FREQUENTLY COMMIT ----> 
 
 Require JSoup, Youtube Google API (and its dependencies).
 
