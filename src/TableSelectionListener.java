@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -14,8 +15,9 @@ import song.SongItem;
  */
 public class TableSelectionListener implements ListSelectionListener {
 
-	private static JTable table;
-	public static List<SongItem> selectedSong;
+	private JTable table;
+	public List<SongItem> selectedSong;
+	private int[] oldSelectedRows=null;
 	
 	public List<SongItem> getSelectedSong() {
 		return selectedSong;
@@ -27,9 +29,29 @@ public class TableSelectionListener implements ListSelectionListener {
 		selectedSong = new ArrayList<SongItem>();
 	}
 
-	public static void resetRowSelection(){
+	public void resetRowSelection(){
 		table.getSelectionModel().clearSelection();
 		selectedSong.clear();
+	}
+	
+	public void saveRowSelected() {
+		oldSelectedRows = table.getSelectedRows();
+	}
+	
+	public void freezeTableSelection() {
+		if (oldSelectedRows!=null && oldSelectedRows.length>0) {
+			for(int row : oldSelectedRows) {
+				table.setRowSelectionInterval(row, row);
+			}	
+		}
+		table.setEnabled(false);
+	}
+	
+	public void unfreezeTableSelection() {
+		table.setEnabled(true);
+		table.setColumnSelectionAllowed(false);
+		table.setRowSelectionAllowed(true);
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 	}
 	
 	@Override
