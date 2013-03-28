@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 import song.HtmlAccess;
 import song.SongItem;
@@ -24,15 +25,12 @@ public class SongTablePanel extends JPanel {
 	private SongTableModel songTableModel = null;
 	private TableSelectionListener selectionListener;
 	private JTable table = null;
-	 
-	public JTable getTable() {
-		return table;
-	}
 
 	public SongTablePanel( ) {
-        //super(new FlowLayout());
 		this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setPreferredSize(new Dimension(540,400));
+        
+        // listener for focus event
         if (songTableModel==null) {
         	songTableModel = new SongTableModel(SongItem.columnData);
         }
@@ -40,9 +38,12 @@ public class SongTablePanel extends JPanel {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setPreferredScrollableViewportSize(new Dimension(500, 300));
         table.setFillsViewportHeight(true);
+        table.setRowSelectionAllowed(true);
+        table.setColumnSelectionAllowed(false);
+        table.setFocusable(true);
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         // Adding selections listener
         selectionListener = new TableSelectionListener(table);
-        //table.setRowSelectionAllowed(true);
         table.getSelectionModel().addListSelectionListener(selectionListener); // row selection
 //        table.getColumnModel().getSelectionModel().addListSelectionListener(selectionListener); //column selection
         //Adjust columns width
@@ -54,7 +55,7 @@ public class SongTablePanel extends JPanel {
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
         
-        ClickListener clickListener = new ClickListener();
+        ClickListener clickListener = new ClickListener(selectionListener);
         // Download Button
         JButton btnOk = new JButton("Scarica");
         btnOk.setName("OK");
@@ -96,13 +97,19 @@ public class SongTablePanel extends JPanel {
 		return coll;
 	}
 	
+	public void resetTableState() {
+		if (table!=null) {
+			table.getSelectionModel().clearSelection();
+			table.setEnabled(true);
+		}
+	}
+	
 	/** Function to update the table
 	 * @param sort PageSorting Method
 	 * @param pace Target Pace
 	*/ 
 	public void updateTableData(SortBy sort, String pace) {
 		if (songTableModel!=null) {
-			table.getSelectionModel().clearSelection();
 			List<SongItem> rows = retrieveData(sort,pace);
 			songTableModel.setDataObj(rows);
 			table.addNotify(); // table refresh
