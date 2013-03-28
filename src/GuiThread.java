@@ -25,7 +25,7 @@ public class GuiThread implements Runnable {
         JFrame frame = new JFrame("TableDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        
+        frame.addWindowListener( new SongTableWindowListener());
         // Table Panel
         SongTablePanel tablePane = new SongTablePanel();
         tablePane.setOpaque(true);
