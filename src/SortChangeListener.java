@@ -22,6 +22,7 @@ public class SortChangeListener implements ActionListener {
 		SortBy sortBy = (SortBy)cb.getSelectedItem();
 		if (!sortBy.equals(sbOldValue)) {
 			sbOldValue = sortBy;
+			songTable.resetTableState();
 			songTable.updateTableData(sortBy, DefaultSettings.DEFAULT_PACE);
 		}
 	}
